@@ -797,8 +797,10 @@ class XMLConverter(PDFConverter[AnyIO]):
                 )
                 self.write(s)
                 self.textline_id += 1
+                text = ''
                 for child in item:
-                    render(child)
+                    text += str(child.get_text())
+                self.write_text(text)
                 self.write("</textline>\n")
             elif isinstance(item, LTTextBox):
                 wmode = ""
