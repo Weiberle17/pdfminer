@@ -749,7 +749,7 @@ class XMLConverter(PDFConverter[AnyIO]):
             child: LTItem
             if isinstance(item, LTPage):
                 s = '<page id="%s" bbox="%s" rotate="%d">\n' % (
-                    item.pageid,
+                    item.pageid - 1,
                     bbox2str(item.bbox),
                     item.rotate,
                 )
