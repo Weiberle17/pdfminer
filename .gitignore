@@ -26,3 +26,8 @@ Pipfile.lock
 .vscode/
 pyproject.toml
 poetry.lock
+
+# Files I am trying around with
+*.txt
+*.pdf
+*.xml
