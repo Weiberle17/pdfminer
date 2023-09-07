@@ -680,6 +680,7 @@ class HTMLConverter(PDFConverter[AnyIO]):
 
 class XMLConverter(PDFConverter[AnyIO]):
 
+    textline_id = 0
     CONTROL = re.compile("[\x00-\x08\x0b-\x0c\x0e-\x1f]")
 
     def __init__(
@@ -787,7 +788,15 @@ class XMLConverter(PDFConverter[AnyIO]):
                     render(child)
                 self.write("</figure>\n")
             elif isinstance(item, LTTextLine):
-                self.write('<textline bbox="%s">\n' % bbox2str(item.bbox))
+                s = (
+                    '<textline id="%d" bbox="%s">\n'
+                    % (
+                      self.textline_id,
+                      bbox2str(item.bbox),
+                    )
+                )
+                self.write(s)
+                self.textline_id += 1
                 for child in item:
                     render(child)
                 self.write("</textline>\n")
@@ -801,6 +810,7 @@ class XMLConverter(PDFConverter[AnyIO]):
                     wmode,
                 )
                 self.write(s)
+                self.textline_id = 0
                 for child in item:
                     render(child)
                 self.write("</textbox>\n")
